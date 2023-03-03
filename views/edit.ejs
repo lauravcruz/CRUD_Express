@@ -1,0 +1,99 @@
+<%- include('template/head', {tituloWeb: "Crear"})%> <% if (error) { %> <%=
+mensaje %>
+<a href="/" class="btn btn-dark btn-block my-2">Volver</a>
+<% } else { %>
+<div class="container py-5">
+  <h2>Editando: <span class ="fst-italic"> <%= croqueta.name %></span></h2>
+  <form id="edit" data-id="<%= croqueta._id %>">
+    <div class="d-grid">
+      <div class="row p-2 py-md-3">
+        <div class="col-md-4">
+          <label for="id">ID:</label>
+          <input type="number" name="id" id="id" class="form-control" value="<%= croqueta.id %>" />
+        </div>
+        <div class="col-md-4">
+          <label for="name">Nombre: </label>
+          <input type="text" name="name" id="name" class="form-control" required placeholder="Nombre" value="<%= croqueta.name %>" />
+        </div>
+        <div class="col-md-4">
+          <label for="category">Categoría: </label>
+          <select class="form-select" name="category" id="category" required>
+            <option value="Clásica" <% if (croqueta.category == 'Clásica') { %>selected<% } %>>Clásica</option>
+            <option value="Vanguardia" <% if (croqueta.category == 'Vanguardia') { %>selected<% } %>>Vanguardia</option>
+          </select>
+        </div>
+      </div>
+      <div class="row p-2 py-md-3">
+        <div class="col-md-12">
+          <label for="description">Descripción: </label>
+          <textarea name="description" class="form-control" required placeholder="Descripción"> <%= croqueta.description %></textarea>
+        </div>
+      </div>
+      <div class="row p-2 py-md-3">
+        <div class="col-md-12">
+          <label for="description">Ingredientes: </label>
+          <textarea name="ingredients" class="form-control" required placeholder="Ingredientes"><%= croqueta.ingredients %></textarea>
+        </div>
+      </div>
+      <div class="row p-2 py-md-3">
+       
+      </div>
+      <button class="btn btn-success m-2" type="submit">Guardar cambios</button>
+    </div>
+  </form>
+</div>
+<% } %> <%- include("template/footer") %>
+
+<script>
+
+  let checkboxes = document.querySelectorAll("input[type='checkbox']");
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      if (checkbox.checked) {
+        checkbox.value = true;
+      } else {
+        checkbox.value = false;
+      }
+    });
+  });
+
+  const formEditar = document.querySelector("#edit");
+  formEditar.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const id = formEditar.elements["id"].value;
+    const name = formEditar.elements["name"].value;
+    const category = formEditar.elements["category"].value;
+    const description = formEditar.elements["description"].value;
+    const ingredients = formEditar.elements["ingredients"].value;
+    const gluten = formEditar.elements["gluten"].value;
+    const dairy = formEditar.elements["dairy"].value;
+    const eggs = formEditar.elements["eggs"].value;
+    const shellFruits = formEditar.elements["shellFruits"].value;
+    const shellFish = formEditar.elements["shellFish"].value;
+    const _id =formEditar.dataset.id;
+    const data = await fetch(`/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        name,
+        category,
+        description,
+        ingredients,
+        gluten, 
+        dairy, 
+        eggs,
+        shellFruits,
+        shellFish
+      }),
+    });
+    const res = await data.json();
+    if (res.estado) {
+      window.location.href = "/";
+    } else {
+      console.log(res);
+    }
+  });
+</script>

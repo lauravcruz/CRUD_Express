@@ -1,4 +1,4 @@
-<%- include('template/head', {tituloWeb: "Panel de Administración"})%>
+<%- include('template/head', {tituloWeb: "La Croquetería"})%>
 
 <div class="px-5 pt-3 text-end">
   <a href="/create" class="btn btn-success btn-block mb-2"
@@ -56,9 +56,8 @@
           </div>
         </td>
         <td class="text-center align-middle">
-          <a href="croqueta/<%= croqueta._id %>" class="btn btn-warning btn-sm"
-            ><i class="bi bi-pen-fill"></i
-          ></a>
+          <a href="/<%= croqueta._id %>" class="btn btn-warning btn-sm"
+            ><i class="bi bi-pen-fill"></i></a>
           <button
             id="delete<%= croqueta._id %>"
             class="btn btn-danger btn-sm"

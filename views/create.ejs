@@ -76,6 +76,7 @@
 <%- include("template/footer") %>
 
 <script>
+  //Para guardar el valor de los checkbox al pasar el formulario:
   let checkboxes = document.querySelectorAll("input[type='checkbox']");
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
