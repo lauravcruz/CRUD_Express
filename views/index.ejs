@@ -1,0 +1,101 @@
+<%- include('template/head', {tituloWeb: "Panel de Administración"})%>
+
+<div class="px-5 pt-3 text-end">
+  <a href="/create" class="btn btn-success btn-block mb-2"
+    ><i class="bi bi-plus-square"></i
+  ></a>
+  <table class="table table-bordered table-striped text-center">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Ingredientes</th>
+        <th scope="col">Alérgenos</th>
+        <th scope="col">Modificar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(arrayCroquetas.length > 0){ %><% arrayCroquetas.forEach(croqueta =>
+      { %>
+      <tr>
+        <th scope="row"><%= croqueta.id %></th>
+        <td><%= croqueta.name %></td>
+        <td><%= croqueta.category %></td>
+        <td class="text-start"><%= croqueta.description %></td>
+        <td><%= croqueta.ingredients %></td>
+        <td class>
+          <div class="d-grid">
+            <div class="row justify-content-center">
+              <div class="col-md-2 m-0 p-0">
+                <%if(croqueta.gluten){ %><img src="img/gluten.png" /> <%} %>
+              </div>
+              <div class="col-md-2 m-0 p-0">
+                <%if(croqueta.dairy){ %>
+                <img src="img/lacteos.png" />
+
+                <%} %>
+              </div>
+              <div class="col-md-2 m-0 p-0">
+                <%if(croqueta.eggs){ %>
+                <img src="img/huevo.png" />
+                <%} %>
+              </div>
+              <div class="col-md-2 m-0 p-0">
+                <%if(croqueta.shellFruits){ %>
+                <img src="img/frutos.png" />
+                <%} %>
+              </div>
+              <div class="col-md-2 m-0 p-0">
+                <%if(croqueta.shellFish){ %>
+                <img src="img/moluscos.png" />
+                <%} %>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="text-center align-middle">
+          <a href="croqueta/<%= croqueta._id %>" class="btn btn-warning btn-sm"
+            ><i class="bi bi-pen-fill"></i
+          ></a>
+          <button
+            id="delete<%= croqueta._id %>"
+            class="btn btn-danger btn-sm"
+            data-id="<%=  croqueta._id %>"
+            onclick="deleteCroqueta(this)"
+          >
+            <i class="bi-file-earmark-x-fill"></i>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <% })} %>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<%- include("template/footer") %>
+
+<script>
+  async function deleteCroqueta(btn) {
+    alert("hola");
+    const btnDelete = btn;
+    console.log(btnDelete.dataset.id);
+    try {
+      const data = await fetch(`/${btnDelete.dataset.id}`, {
+        method: "delete",
+      });
+      const res = await data.json();
+      console.log(res);
+      if (res.estado) {
+        window.location.href = "/";
+      } else {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>

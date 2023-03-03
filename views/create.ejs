@@ -1,0 +1,89 @@
+<%- include('template/head', {tituloWeb: "Crear"})%>
+
+<div class="container py-5">
+  <h2>Crear nueva croqueta</h2>
+  <form action="/insert" class="my-2" method="POST">
+    <div class="d-grid">
+      <div class="row p-2 py-md-3">
+        <div class="col-md-4">
+          <label for="id">ID:</label>
+          <input type="number" name="id" id="id" class="form-control" />
+        </div>
+        <div class="col-md-4">
+          <label for="name">Nombre: </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            class="form-control"
+            required
+            placeholder="Nombre"
+          />
+        </div>
+        <div class="col-md-4">
+          <label for="category">Categoría: </label>
+          <select class="form-select" name="category" id="category" required>
+            <option selected value="Clásica">Clásica</option>
+            <option value="Vanguardia">Vanguardia</option>
+          </select>
+        </div>
+      </div>
+      <div class="row p-2 py-md-3">
+        <div class="col-md-12">
+          <label for="description">Descripción: </label>
+          <textarea
+            name="description"
+            class="form-control"
+            required
+            placeholder="Descripción"
+          ></textarea>
+        </div>
+      </div>
+      <div class="row p-2 py-md-3">
+        <div class="col-md-12">
+          <label for="description">Ingredientes: </label>
+          <textarea
+            name="ingredients"
+            class="form-control"
+            required
+            placeholder="Ingredientes"
+          ></textarea>
+        </div>
+      </div>
+      <div class="row p-2 py-md-3">
+        <div class="col-md-12">
+          <label>Alérgenos: </label>
+          <label for="gluten" class="p-3">Gluten:</label>
+          <input type="checkbox" name="gluten" id="gluten" />
+
+          <label for="dairy" class="p-3">Lácteos:</label>
+          <input type="checkbox" name="dairy" id="dairy" />
+
+          <label for="eggs" class="p-3">Huevo:</label>
+          <input type="checkbox" name="eggs" id="eggs" />
+
+          <label for="shellFruits" class="p-3">Frutos secos:</label>
+          <input type="checkbox" name="shellFruits" id="shellFruits" />
+
+          <label for="shellFish" class="p-3">Moluscos:</label>
+          <input type="checkbox" name="shellFish" id="shellFish" />
+        </div>
+      </div>
+      <button class="btn btn-success m-2" type="submit">Crear croqueta</button>
+    </div>
+  </form>
+</div>
+<%- include("template/footer") %>
+
+<script>
+  let checkboxes = document.querySelectorAll("input[type='checkbox']");
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      if (checkbox.checked) {
+        checkbox.value = true;
+      } else {
+        checkbox.value = false;
+      }
+    });
+  });
+</script>
